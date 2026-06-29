@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -38,7 +39,7 @@ public class ProductController {
         if (productOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity.ok(productOptional.get());
+        return ResponseEntity.ok(productOptional.get());
     }
 
     @PostMapping("")
