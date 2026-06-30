@@ -1,27 +1,22 @@
-package spring_boot_web_hexagon_arch;
+package spring_boot_web_hexagon_arch.product.infrastructure.api;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import spring_boot_web_hexagon_arch.common.mediator.Mediator;
+import spring_boot_web_hexagon_arch.product.application.ProductCreateRequest;
+import spring_boot_web_hexagon_arch.product.domain.Product;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/products")
-public class ProductController {
+@RequiredArgsConstructor
+public class ProductController implements ProductApi {
 
-    public List<Product> products;
-
-    public ProductController() {
-        this.products = new ArrayList<>();
-
-        products.add(Product.builder().id(1L).name("Product 1").description("Description 1").price(100.0).image("image 1").build());
-        products.add(Product.builder().id(2L).name("Product 2").description("Description 2").price(200.0).image("image 2").build());
-        //products.add(Product.builder().id(3L).name("Product 3").description("Description 3").price(300.0).image("image 3").build());
-
-    }
+    private Mediator mediator;
 
     //With ResponseEntity objects we make sure that they last what the http request last, no more
     @GetMapping("")
@@ -33,8 +28,7 @@ public class ProductController {
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Optional<Product> productOptional = products.stream()
                 .filter(p -> p.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .findFirst();
 
         if (productOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -44,7 +38,7 @@ public class ProductController {
 
     @PostMapping("")
     public ResponseEntity<Void> saveProduct(@RequestBody Product product) {
-        products.add(product);
+        mediator.dispatch(new ProductCreateRequest(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getImage()));
         return ResponseEntity.created(URI.create("/api/v1/products/".concat(product.getId().toString()))).build();
     }
 
