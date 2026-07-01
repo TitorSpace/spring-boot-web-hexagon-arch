@@ -1,11 +1,9 @@
-package spring_boot_web_hexagon_arch.product.domain;
+package spring_boot_web_hexagon_arch.product.infrastructure.database.entity;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
-public class Product {
+public class ProductEntity {
 
     private Long id;
     private String name;

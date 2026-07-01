@@ -8,12 +8,12 @@ import spring_boot_web_hexagon_arch.product.domain.ProductRepository;
 
 @Service
 @RequiredArgsConstructor
-public class ProductCreateHandler implements RequestHandler<ProductCreateRequest, Void> {
+public class CreateProductHandler implements RequestHandler<CreateProductRequest, Void> {
 
     private final ProductRepository productRepository;
-    
+
     @Override
-    public Void handle(ProductCreateRequest request) {
+    public Void handle(CreateProductRequest request) {
 
         Product product = Product.builder()
                 .id(request.getId())
@@ -28,7 +28,7 @@ public class ProductCreateHandler implements RequestHandler<ProductCreateRequest
     }
 
     @Override
-    public Class<ProductCreateRequest> getRequestType() {
-        return ProductCreateRequest.class;
+    public Class<CreateProductRequest> getRequestType() {
+        return CreateProductRequest.class;
     }
 }
