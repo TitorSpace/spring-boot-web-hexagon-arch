@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring_boot_web_hexagon_arch.common.mediator.Mediator;
-import spring_boot_web_hexagon_arch.product.application.CreateProductRequest;
+import spring_boot_web_hexagon_arch.product.application.command.create.CreateProductRequest;
+import spring_boot_web_hexagon_arch.product.application.query.getById.GetProductByIdRequest;
+import spring_boot_web_hexagon_arch.product.application.query.getById.GetProductByIdResponse;
 import spring_boot_web_hexagon_arch.product.infrastructure.api.dto.ProductDto;
 import spring_boot_web_hexagon_arch.product.infrastructure.api.mapper.ProductMapper;
 
@@ -29,7 +31,11 @@ public class ProductController implements ProductApi {
     @GetMapping("/{id}")
     public ResponseEntity<ProductDto> getProductById(@PathVariable Long id) {
 
-        return ResponseEntity.ok(null);
+        GetProductByIdResponse response = mediator.dispatch(new GetProductByIdRequest(id));
+
+        ProductDto productDto = productMapper.mapToProduct(response.getProduct());
+
+        return ResponseEntity.ok(productDto);
     }
 
     @PostMapping("")
