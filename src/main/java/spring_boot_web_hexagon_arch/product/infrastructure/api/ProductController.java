@@ -1,10 +1,15 @@
 package spring_boot_web_hexagon_arch.product.infrastructure.api;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring_boot_web_hexagon_arch.common.mediator.Mediator;
 import spring_boot_web_hexagon_arch.product.application.command.create.CreateProductRequest;
+import spring_boot_web_hexagon_arch.product.application.command.delete.DeleteProductRequest;
+import spring_boot_web_hexagon_arch.product.application.command.update.UpdateProductRequest;
+import spring_boot_web_hexagon_arch.product.application.query.getAll.GetAllProductRequest;
+import spring_boot_web_hexagon_arch.product.application.query.getAll.GetAllProductResponse;
 import spring_boot_web_hexagon_arch.product.application.query.getById.GetProductByIdRequest;
 import spring_boot_web_hexagon_arch.product.application.query.getById.GetProductByIdResponse;
 import spring_boot_web_hexagon_arch.product.infrastructure.api.dto.ProductDto;
@@ -25,7 +30,13 @@ public class ProductController implements ProductApi {
     //With ResponseEntity objects we make sure that they last what the http request last, no more
     @GetMapping("")
     public ResponseEntity<List<ProductDto>> getAllProduct(@RequestParam(required = false) String pageSize) {
-        return ResponseEntity.ok(null);
+
+
+        GetAllProductResponse response = mediator.dispatch(new GetAllProductRequest());
+
+        List<ProductDto> productDtos = response.getProducts().stream().map(productMapper::mapToProduct).toList();
+
+        return ResponseEntity.ok(productDtos);
     }
 
     @GetMapping("/{id}")
@@ -39,7 +50,7 @@ public class ProductController implements ProductApi {
     }
 
     @PostMapping("")
-    public ResponseEntity<Void> saveProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<Void> saveProduct(@RequestBody @Valid ProductDto productDto) {
 
         CreateProductRequest request = productMapper.mapToCreateProductRequest(productDto);
 
@@ -49,7 +60,11 @@ public class ProductController implements ProductApi {
     }
 
     @PutMapping("")
-    public ResponseEntity<Void> updateProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<Void> updateProduct(@RequestBody @Valid ProductDto productDto) {
+
+        UpdateProductRequest request = productMapper.mapToUpdateProductRequest(productDto);
+
+        mediator.dispatch(request);
 
         return ResponseEntity.noContent().build();
 
@@ -58,6 +73,8 @@ public class ProductController implements ProductApi {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
 //        products.removeIf(product -> product.getId().equals(id));
+
+        mediator.dispatch(new DeleteProductRequest(id));
 
         return ResponseEntity.noContent().build();
     }

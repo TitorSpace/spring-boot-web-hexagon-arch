@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import spring_boot_web_hexagon_arch.product.application.command.create.CreateProductRequest;
+import spring_boot_web_hexagon_arch.product.application.command.update.UpdateProductRequest;
 import spring_boot_web_hexagon_arch.product.domain.Product;
 import spring_boot_web_hexagon_arch.product.infrastructure.api.dto.ProductDto;
 
@@ -12,6 +13,8 @@ import spring_boot_web_hexagon_arch.product.infrastructure.api.dto.ProductDto;
 public interface ProductMapper {
 
     CreateProductRequest mapToCreateProductRequest(ProductDto productDto);
+
+    UpdateProductRequest mapToUpdateProductRequest(ProductDto productDto);
 
     ProductDto mapToProduct(Product product);
 

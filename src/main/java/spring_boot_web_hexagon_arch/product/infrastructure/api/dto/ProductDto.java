@@ -1,16 +1,23 @@
 package spring_boot_web_hexagon_arch.product.infrastructure.api.dto;
 
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 
 @Data
 //This is the information that arrive to our input of APIRest
-//Later will have validation logics
 public class ProductDto {
 
     private Long id;
+    @NotBlank
     private String name;
+    @Length(min = 10, max = 255, message = "Description must be between 10 and 255 characters")
     private String description;
+    @DecimalMin(value = "0.01", inclusive = false)
+    @DecimalMax(value = "999.99", inclusive = false)
     private Double price;
     private String image;
 

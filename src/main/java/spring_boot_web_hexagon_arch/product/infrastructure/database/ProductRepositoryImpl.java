@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductRepositoryImpl implements ProductRepository {
 
-    private List<ProductEntity> products = new ArrayList<>();
+    private final List<ProductEntity> products = new ArrayList<>();
 
     private final ProductEntityMapper productEntityMapper;
 
@@ -23,6 +23,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void upsert(Product product) {
         ProductEntity productEntity = productEntityMapper.mapToProductEntity(product);
+        products.removeIf(p -> p.getId().equals(productEntity.getId()));
         products.add(productEntity);
     }
 
