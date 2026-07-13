@@ -1,0 +1,8 @@
+### Get all products
+GET http://localhost:8080/api/v1/products?pageSize=1
+Content-Type: application/json
+
+### Get product by ID
+GET http://localhost:8080/api/v1/products/1
+Content-Type: application/json
+
