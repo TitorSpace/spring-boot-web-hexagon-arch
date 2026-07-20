@@ -5,7 +5,7 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import spring_boot_web_hexagon_arch.product.application.command.create.CreateProductRequest;
 import spring_boot_web_hexagon_arch.product.application.command.update.UpdateProductRequest;
-import spring_boot_web_hexagon_arch.product.domain.Product;
+import spring_boot_web_hexagon_arch.product.domain.entity.Product;
 import spring_boot_web_hexagon_arch.product.infrastructure.api.dto.ProductDto;
 
 //Mapper has diff attrss. ComponentModel now everytime that starts is going the implement in runtime the class of this interface

@@ -2,8 +2,8 @@ package spring_boot_web_hexagon_arch.product.infrastructure.database;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import spring_boot_web_hexagon_arch.product.domain.Product;
-import spring_boot_web_hexagon_arch.product.domain.ProductRepository;
+import spring_boot_web_hexagon_arch.product.domain.entity.Product;
+import spring_boot_web_hexagon_arch.product.domain.port.ProductRepository;
 import spring_boot_web_hexagon_arch.product.infrastructure.database.entity.ProductEntity;
 import spring_boot_web_hexagon_arch.product.infrastructure.database.mapper.ProductEntityMapper;
 

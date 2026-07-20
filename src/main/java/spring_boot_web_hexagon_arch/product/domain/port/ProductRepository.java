@@ -1,4 +1,6 @@
-package spring_boot_web_hexagon_arch.product.domain;
+package spring_boot_web_hexagon_arch.product.domain.port;
+
+import spring_boot_web_hexagon_arch.product.domain.entity.Product;
 
 import java.util.List;
 import java.util.Optional;
