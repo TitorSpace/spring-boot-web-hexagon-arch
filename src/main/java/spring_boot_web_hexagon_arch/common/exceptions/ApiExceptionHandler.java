@@ -1,4 +1,4 @@
-package spring_boot_web_hexagon_arch.common.mediator.exceptions;
+package spring_boot_web_hexagon_arch.common.exceptions;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;

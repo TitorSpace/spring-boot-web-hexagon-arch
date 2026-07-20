@@ -1,4 +1,4 @@
-package spring_boot_web_hexagon_arch.common.mediator.exceptions;
+package spring_boot_web_hexagon_arch.common.exceptions;
 
 import lombok.Data;
 

@@ -7,5 +7,5 @@ import spring_boot_web_hexagon_arch.common.mediator.Request;
 @Data
 @AllArgsConstructor
 public class GetAllProductRequest implements Request<GetAllProductResponse> {
-    
+
 }
