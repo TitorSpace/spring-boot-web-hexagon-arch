@@ -12,7 +12,9 @@ import spring_boot_web_hexagon_arch.product.application.query.getAll.GetAllProdu
 import spring_boot_web_hexagon_arch.product.application.query.getAll.GetAllProductResponse;
 import spring_boot_web_hexagon_arch.product.application.query.getById.GetProductByIdRequest;
 import spring_boot_web_hexagon_arch.product.application.query.getById.GetProductByIdResponse;
+import spring_boot_web_hexagon_arch.product.infrastructure.api.dto.CreateProductDto;
 import spring_boot_web_hexagon_arch.product.infrastructure.api.dto.ProductDto;
+import spring_boot_web_hexagon_arch.product.infrastructure.api.dto.UpdateProductDto;
 import spring_boot_web_hexagon_arch.product.infrastructure.api.mapper.ProductMapper;
 
 import java.net.URI;
@@ -50,7 +52,7 @@ public class ProductController implements ProductApi {
     }
 
     @PostMapping("")
-    public ResponseEntity<Void> saveProduct(@RequestBody @Valid ProductDto productDto) {
+    public ResponseEntity<Void> saveProduct(@ModelAttribute @Valid CreateProductDto productDto) {
 
         CreateProductRequest request = productMapper.mapToCreateProductRequest(productDto);
 
@@ -60,7 +62,7 @@ public class ProductController implements ProductApi {
     }
 
     @PutMapping("")
-    public ResponseEntity<Void> updateProduct(@RequestBody @Valid ProductDto productDto) {
+    public ResponseEntity<Void> updateProduct(@ModelAttribute @Valid UpdateProductDto productDto) {
 
         UpdateProductRequest request = productMapper.mapToUpdateProductRequest(productDto);
 
