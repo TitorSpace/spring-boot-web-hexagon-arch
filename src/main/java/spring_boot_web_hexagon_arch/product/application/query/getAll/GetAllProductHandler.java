@@ -1,6 +1,7 @@
 package spring_boot_web_hexagon_arch.product.application.query.getAll;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import spring_boot_web_hexagon_arch.common.mediator.RequestHandler;
 import spring_boot_web_hexagon_arch.product.domain.entity.Product;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GetAllProductHandler implements RequestHandler<GetAllProductRequest, GetAllProductResponse> {
 
     private final ProductRepository productRepository;
@@ -18,7 +20,11 @@ public class GetAllProductHandler implements RequestHandler<GetAllProductRequest
     @Override
     public GetAllProductResponse handle(GetAllProductRequest request) {
 
+        log.info("Getting all products");
+
         List<Product> products = productRepository.findAll();
+
+        log.info("Found {} products", products.size());
 
         return new GetAllProductResponse(products);
     }
