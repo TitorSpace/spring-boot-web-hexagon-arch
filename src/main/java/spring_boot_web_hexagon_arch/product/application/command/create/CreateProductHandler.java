@@ -1,6 +1,7 @@
 package spring_boot_web_hexagon_arch.product.application.command.create;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import spring_boot_web_hexagon_arch.common.mediator.RequestHandler;
 import spring_boot_web_hexagon_arch.common.util.FileUtils;
@@ -9,6 +10,7 @@ import spring_boot_web_hexagon_arch.product.domain.port.ProductRepository;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CreateProductHandler implements RequestHandler<CreateProductRequest, Void> {
 
     private final ProductRepository productRepository;
@@ -16,6 +18,8 @@ public class CreateProductHandler implements RequestHandler<CreateProductRequest
 
     @Override
     public Void handle(CreateProductRequest request) {
+
+        log.info("Creating product with id {}", request.getId());
 
         String uniqueFilename = fileUtils.saveProductImage(request.getFile());
 
@@ -28,6 +32,9 @@ public class CreateProductHandler implements RequestHandler<CreateProductRequest
                 .build();
 
         productRepository.upsert(product);
+
+        log.info("Created product with id {}", request.getId());
+
         return null;
     }
 
