@@ -1,6 +1,9 @@
 package spring_boot_web_hexagon_arch.product.infrastructure.database;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import spring_boot_web_hexagon_arch.product.domain.entity.Product;
 import spring_boot_web_hexagon_arch.product.domain.port.ProductRepository;
@@ -13,6 +16,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class ProductRepositoryImpl implements ProductRepository {
 
     private final List<ProductEntity> products = new ArrayList<>();
@@ -27,8 +31,10 @@ public class ProductRepositoryImpl implements ProductRepository {
         products.add(productEntity);
     }
 
+    @Cacheable(value = "products", key = "#id")
     @Override
     public Optional<Product> findById(Long id) {
+        log.info("Finding product with id {}", id);
         return products.stream()
                 .filter(product -> product.getId().equals(id))
                 .findFirst()
@@ -42,6 +48,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .toList();
     }
 
+    @CacheEvict(value = "products", key = "#id")
     @Override
     public void deleteById(Long id) {
         products.removeIf(product -> product.getId().equals(id));
